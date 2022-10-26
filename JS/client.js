@@ -17,7 +17,7 @@ function scrollToBottom() {
 
 function currentDate() {
   date = new Date()
-  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  const options = { weekday: 'long', hour: 'numeric', minute: 'numeric'};
   current = date.toLocaleDateString(undefined, options)
   return current
 }
@@ -53,9 +53,11 @@ const appendDOM = (message, position)=> {
   }
   
   user = prompt("Enter Your Name")
+  if (user.length<3) location.reload()
   socket.emit('new-user-join', user)
 
   socket.on("new-connection", clients=> {
+    if ((clients) == 1) clients = "No"
     appendDOM(`<i class="fa fa-user"></i> ${clients} users in the chat`, "info")
   })
 
